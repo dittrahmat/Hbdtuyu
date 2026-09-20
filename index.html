@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Happy Birthday 🎂</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(
+                135deg,
+                #ff758c,
+                #ff7eb3,
+                #ffb199
+            );
+        }
+
+        /* =========================
+           HALAMAN AWAL
+        ========================= */
+
+        #awal {
+            position: fixed;
+            inset: 0;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+            color: white;
+
+            transition: 1s;
+        }
+
+        #awal h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+            animation: muncul 1s ease;
+        }
+
+        #awal p {
+            font-size: 16px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        /* =========================
+           KADO
+        ========================= */
+
+        .kado-container {
+            position: relative;
+            width: 160px;
+            height: 170px;
+
+            cursor: pointer;
+
+            animation: melayang 2s ease-in-out infinite;
+        }
+
+        .kado {
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+
+            width: 130px;
+            height: 100px;
+
+            background: #ff1744;
+            border-radius: 5px;
+
+            box-shadow:
+                0 15px 30px rgba(0,0,0,0.25);
+        }
+
+        /* Tutup kado */
+
+        .tutup {
+            position: absolute;
+
+            top: 45px;
+            left: 5px;
+
+            width: 150px;
+            height: 30px;
+
+            background: #d50032;
+
+            border-radius: 5px;
+
+            z-index: 3;
+
+            transition: 1s;
+        }
+
+        /* Pita vertikal */
+
+        .kado::before {
+            content: "";
+
+            position: absolute;
+
+            left: 52px;
+            top: 0;
+
+            width: 26px;
+            height: 100%;
+
+            background: #ffd740;
+        }
+
+        .tutup::before {
+            content: "";
+
+            position: absolute;
+
+            left: 62px;
+            top: 0;
+
+            width: 26px;
+            height: 100%;
+
+            background: #ffd740;
+        }
+
+        /* Pita horizontal */
+
+        .tutup::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 10px;
+
+            width: 150px;
+            height: 10px;
+
+            background: #ffea00;
+        }
+
+        /* Pita atas */
+
+        .pita {
+            position: absolute;
+
+            top: 15px;
+            left: 55px;
+
+            width: 50px;
+            height: 25px;
+
+            z-index: 4;
+        }
+
+        .pita::before,
+        .pita::after {
+            content: "";
+
+            position: absolute;
+
+            width: 35px;
+            height: 25px;
+
+            border: 7px solid #ffd740;
+
+            border-radius: 50%;
+        }
+
+        .pita::before {
+            left: -20px;
+            transform: rotate(-30deg);
+        }
+
+        .pita::after {
+            right: -20px;
+            transform: rotate(30deg);
+        }
+
+        /* =========================
+           ANIMASI BUKA KADO
+        ========================= */
+
+        .kado-container.buka .tutup {
+            transform:
+                translateY(-100px)
+                rotate(-10deg);
+            opacity: 0;
+        }
+
+        .kado-container.buka {
+            animation: none;
+            transform: scale(1.1);
+        }
+
+        .kado-container.buka .kado {
+            animation: ledakan 0.8s ease;
+        }
+
+        @keyframes ledakan {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes melayang {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* =========================
+           SURPRISE
+        ========================= */
+
+        #surprise {
+            position: fixed;
+
+            inset: 0;
+
+            display: none;
+
+            overflow-y: auto;
+
+            padding: 40px 20px 80px;
+
+            text-align: center;
+
+            color: white;
+        }
+
+        #surprise h1 {
+            font-size: 42px;
+
+            margin-bottom: 10px;
+
+            animation: muncul 1s ease;
+        }
+
+        #surprise h2 {
+            font-size: 24px;
+
+            margin-bottom: 25px;
+
+            animation: muncul 1.5s ease;
+        }
+
+        /* =========================
+           FOTO
+        ========================= */
+
+        .foto {
+            width: 230px;
+            height: 230px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            border: 6px solid white;
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,0.3);
+
+            animation:
+                fotoMuncul 1.5s ease;
+        }
+
+        @keyframes fotoMuncul {
+            from {
+                opacity: 0;
+                transform: scale(0.5) rotate(-20deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        /* =========================
+           UCAPAN
+        ========================= */
+
+        .ucapan {
+            width: 100%;
+            max-width: 500px;
+
+            margin: 30px auto;
+
+            padding: 25px;
+
+            background:
+                rgba(255,255,255,0.2);
+
+            backdrop-filter: blur(12px);
+
+            border: 1px solid
+                rgba(255,255,255,0.3);
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.15);
+
+            line-height: 1.7;
+
+            animation: muncul 2s ease;
+        }
+
+        .ucapan p {
+            font-size: 17px;
+        }
+
+        .emoji {
+            font-size: 35px;
+
+            margin-top: 20px;
+
+            animation:
+                melayang 2s infinite;
+        }
+
+        /* =========================
+           CONFETTI
+        ========================= */
+
+        .confetti {
+            position: fixed;
+
+            top: -40px;
+
+            pointer-events: none;
+
+            z-index: 10;
+
+            animation:
+                jatuh linear forwards;
+        }
+
+        @keyframes jatuh {
+
+            from {
+                transform:
+                    translateY(-50px)
+                    rotate(0deg);
+            }
+
+            to {
+                transform:
+                    translateY(110vh)
+                    rotate(720deg);
+            }
+
+        }
+
+        /* =========================
+           TOMBOL MUSIK
+        ========================= */
+
+        #musikBtn {
+            position: fixed;
+
+            right: 20px;
+            bottom: 20px;
+
+            width: 55px;
+            height: 55px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: white;
+
+            font-size: 23px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.25);
+
+            display: none;
+
+            z-index: 20;
+        }
+
+        #musikBtn:active {
+            transform: scale(0.9);
+        }
+
+        /* =========================
+           ANIMASI UMUM
+        ========================= */
+
+        @keyframes muncul {
+
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            #awal h1 {
+                font-size: 25px;
+            }
+
+            #awal p {
+                font-size: 15px;
+            }
+
+            #surprise h1 {
+                font-size: 34px;
+            }
+
+            #surprise h2 {
+                font-size: 21px;
+            }
+
+            .foto {
+                width: 190px;
+                height: 190px;
+            }
+
+            .ucapan {
+                padding: 20px;
+            }
+
+            .ucapan p {
+                font-size: 16px;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     HALAMAN AWAL
+===================================== -->
+
+<section id="awal">
+
+    <h1>
+        🎁 Ada sesuatu buat kamu...
+    </h1>
+
+    <p>
+        Klik kadonya untuk membuka surprise ❤️
+    </p>
+
+
+    <div
+        class="kado-container"
+        id="kado"
+        onclick="bukaKado()"
+    >
+
+        <div class="pita"></div>
+
+        <div class="tutup"></div>
+
+        <div class="kado"></div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================
+     HALAMAN SURPRISE
+===================================== -->
+
+<section id="surprise">
+
+    <h1>
+        🎉 HAPPY BIRTHDAY! 🎉
+    </h1>
+
+    <h2>
+        Untuk Kamu ❤️
+    </h2>
+
+
+    <!--
+        GANTI foto.jpg
+        dengan nama foto kamu
+    -->
+
+    <img
+        src="foto.jpg"
+        alt="Foto"
+        class="foto"
+    >
+
+
+    <div class="ucapan">
+
+        <p>
+            Selamat ulang tahun! 🥳🎂
+        </p>
+
+        <br>
+
+
+        <p>
+            Semoga di umur yang baru ini
+            kamu selalu diberikan kesehatan,
+            kebahagiaan, dan dimudahkan
+            dalam setiap langkahmu. ✨
+        </p>
+
+        <br>
+
+
+        <p>
+            Semoga semua impian,
+            harapan, dan cita-cita kamu
+            bisa tercapai satu per satu.
+        </p>
+
+        <br>
+
+
+        <p>
+            Tetap jadi diri kamu sendiri,
+            tetap semangat,
+            dan jangan lupa bahagia. ❤️
+        </p>
+
+        <br>
+
+
+        <p>
+            Have a wonderful birthday! 🎂
+        </p>
+
+
+        <div class="emoji">
+            🎈 🎁 💖 🎂 ✨
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================
+     AUDIO
+===================================== -->
+
+<audio
+    id="musik"
+    loop
+    preload="auto"
+>
+
+    <!--
+        GANTI musik.mp3
+        dengan nama file musik kamu
+    -->
+
+    <source
+        src="musik.mp3"
+        type="audio/mpeg"
+    >
+
+</audio>
+
+
+
+<!-- =====================================
+     TOMBOL MUSIK
+===================================== -->
+
+<button
+    id="musikBtn"
+    onclick="toggleMusik()"
+>
+    🔊
+</button>
+
+
+
+<script>
+
+/* =====================================
+   BUKA KADO
+===================================== */
+
+function bukaKado() {
+
+    const kado =
+        document.getElementById("kado");
+
+    const awal =
+        document.getElementById("awal");
+
+    const surprise =
+        document.getElementById("surprise");
+
+    const musik =
+        document.getElementById("musik");
+
+    const musikBtn =
+        document.getElementById("musikBtn");
+
+
+    /*
+        Animasi kado terbuka
+    */
+
+    kado.classList.add("buka");
+
+
+    /*
+        Tunggu animasi kado
+        sebelum menampilkan surprise
+    */
+
+    setTimeout(function() {
+
+        awal.style.display = "none";
+
+        surprise.style.display = "block";
+
+        musikBtn.style.display = "block";
+
+
+        /*
+            Mulai musik.
+
+            Karena fungsi ini dipanggil
+            setelah user klik kado,
+            browser biasanya mengizinkan
+            pemutaran audio.
+        */
+
+        musik.play()
+            .catch(function(error) {
+
+                console.log(
+                    "Musik tidak dapat diputar otomatis:",
+                    error
+                );
+
+            });
+
+
+        /*
+            Mulai confetti
+        */
+
+        buatConfetti();
+
+    }, 900);
+
+}
+
+
+
+/* =====================================
+   MUSIK ON / OFF
+===================================== */
+
+function toggleMusik() {
+
+    const musik =
+        document.getElementById("musik");
+
+    const tombol =
+        document.getElementById("musikBtn");
+
+
+    if (musik.paused) {
+
+        musik.play();
+
+        tombol.innerHTML = "🔊";
+
+    } else {
+
+        musik.pause();
+
+        tombol.innerHTML = "🔇";
+
+    }
+
+}
+
+
+
+/* =====================================
+   CONFETTI
+===================================== */
+
+function buatConfetti() {
+
+    const emoji = [
+        "🎉",
+        "🎊",
+        "✨",
+        "💖",
+        "🎈",
+        "🌟",
+        "🎁",
+        "❤️"
+    ];
+
+
+    for (
+        let i = 0;
+        i < 50;
+        i++
+    ) {
+
+        const confetti =
+            document.createElement("div");
+
+
+        confetti.className =
+            "confetti";
+
+
+        /*
+            Random emoji
+        */
+
+        confetti.innerHTML =
+            emoji[
+                Math.floor(
+                    Math.random()
+                    * emoji.length
+                )
+            ];
+
+
+        /*
+            Posisi random
+        */
+
+        confetti.style.left =
+            Math.random() * 100 + "vw";
+
+
+        /*
+            Ukuran random
+        */
+
+        confetti.style.fontSize =
+            (15 + Math.random() * 20)
+            + "px";
+
+
+        /*
+            Kecepatan random
+        */
+
+        confetti.style.animationDuration =
+            (3 + Math.random() * 4)
+            + "s";
+
+
+        /*
+            Delay random
+        */
+
+        confetti.style.animationDelay =
+            Math.random() * 2
+            + "s";
+
+
+        document.body.appendChild(
+            confetti
+        );
+
+
+        /*
+            Hapus confetti setelah
+            animasi selesai
+        */
+
+        setTimeout(function() {
+
+            confetti.remove();
+
+        }, 8000);
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
+
+📁 File yang harus lu upload ke GitHub
+
+Buat satu folder:
+
+birthday-surprise/
+│
+├── index.html
+├── foto.jpg
+└── musik.mp3
+
+Penting: nama file harus sama persis.
+
+Kalau foto lu misalnya "ucuu.jpg", ubah:
+
+<img src="foto.jpg">
+
+menjadi:
+
+<img src="ucuu.jpg">
+
+Begitu juga musik. Misalnya file lu "lagu.mp3", ubah:
+
+<source src="musik.mp3" type="audio/mpeg">
+
+menjadi:
+
+<source src="lagu.mp3" type="audio/mpeg">
+
+Setelah ketiganya di-upload ke GitHub dan GitHub Pages diaktifkan, cukup kasih link GitHub Pages-nya ke orang tersebut. Dia nggak perlu punya file foto atau musiknya secara terpisah.
